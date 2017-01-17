@@ -1,7 +1,7 @@
 # Учебный проект «Код и Магия» [![Build status][travis-image]][travis-url] [![Dependency status][dependency-image]][dependency-url]
 
 * Студент: [Александр Близнецов](https://up.htmlacademy.ru/javascript/8/user/91747).
-* Наставник: `Неизвестно`.
+* Наставник: `Наталья Ёркина`.
 
 ---
 
