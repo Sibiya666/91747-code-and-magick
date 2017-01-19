@@ -595,7 +595,7 @@ window.Game = (function () {
             return me.state === ObjectState.DISPOSED ?
               Verdict.FAIL :
               Verdict.CONTINUE;
-            },
+          },
 
           /**
            * Если нажата клавиша Esc игра ставится на паузу.
