@@ -13,14 +13,17 @@ window.renderStatistics = function (ctx, names, times) {
   ctx.fillText('Список результатов!', 120, 70);
   var step = 0;
   var bestTime = -1;
+  for (var a = 0; a < times.length; a++) {
+    var time = parseInt(times[a], 10);
+    if (time > bestTime) {
+      bestTime = time;
+    }
+  }
   for (var i = 0; i < times.length; i++) {
     if (i !== 0) {
       step += 90;
     }
     var time = parseInt(times[i], 10);
-    if (time > bestTime) {
-      bestTime = time;
-    }
     var MAX_HEIGHT = 150;
     var heightColumn = MAX_HEIGHT / bestTime * time;
     ctx.font = '16px PT Mono';
