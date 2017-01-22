@@ -8,7 +8,7 @@
  * @param {number} width - Width background.
  * @param {number} height - Height background.
  */
-function paintCloud(ctx, x, y, width, height) {
+function drwCloud(ctx, x, y, width, height) {
   ctx.shadowColor = 'rgba(0, 0, 0, 0.7)';
   ctx.shadowBlur = 0;
   ctx.shadowOffsetX = 10;
@@ -24,7 +24,7 @@ function paintCloud(ctx, x, y, width, height) {
  * @param {string} nextString - Next message.
  * @param {number} step - Line height.
  */
-function paintMessage(ctx, string, nextString, step) {
+function drwMessage(ctx, string, nextString, step) {
   ctx.fillStyle = '#000000';
   ctx.font = '16px PT Mono';
   var COORDINATE_STRING_X = 120;
@@ -38,7 +38,7 @@ function paintMessage(ctx, string, nextString, step) {
  * @param {Array.<number>} times - Time of users.
  * @return {number} bestTime - Return number.
  */
-var bestTime = function (times) {
+var getBestTime = function (times) {
   /**
    * Return correct sequence of number.
    * @param {number} item - Element array.
@@ -60,15 +60,15 @@ var bestTime = function (times) {
  * @param {number} max - max saturation color.
  * @return {number} saturate  - Saturation color.
  */
-var saturate = function (min, max) {
+var getSaturate = function (min, max) {
   return Math.random() * (max - min) + min;
 };
 
 /**
  * Change color column.
  * @param {CanvasRenderingContext2D} ctx - Rendering context.
- * @param {string} name - Name users.
- * @param {function} saturateColor - Saturate color;
+ * @param {string} name - Users Name.
+ * @param {number} saturateColor - Saturate color;
  */
 function colorColumn(ctx, name, saturateColor) {
   ctx.fillStyle = (name === 'Вы') ? 'rgba(255, 0, 0, 1)' : 'rgba(3, 4 , 255, '
@@ -76,12 +76,12 @@ function colorColumn(ctx, name, saturateColor) {
 }
 
 /**
- * Paint bar chart.
+ * drw bar chart.
  * @param {CanvasRenderingContext2D} ctx - Rendering context.
- * @param {Array.<number>} times - Times of users.
- * @param {Array.<string>} names - Names of users.
+ * @param {Array.<number>} times - Users Time.
+ * @param {Array.<string>} names - Users Name.
  */
-function paintBarChart(ctx, times, names) {
+function drwBarChart(ctx, times, names) {
   var step = 0;
   var OFFSET = 90;
 
@@ -93,7 +93,7 @@ function paintBarChart(ctx, times, names) {
 
     var time = parseInt(times[i], 10);
     var MAX_HEIGHT = 150;
-    var heightColumn = MAX_HEIGHT / bestTime(times) * time;
+    var heightColumn = MAX_HEIGHT / getBestTime(times) * time;
     var COORDINATE_COLUMN_X = 120;
     var COORDINATE_COLUMN_Y = 240;
     var COORDINATE_SCORE_Y = 250;
@@ -101,7 +101,7 @@ function paintBarChart(ctx, times, names) {
     var WIDTH_COLUMN = 40;
     var name = names[i];
 
-    colorColumn(ctx, name, saturate(0.1, 1));
+    colorColumn(ctx, name, getSaturate(0.1, 1));
 
     ctx.fillRect(COORDINATE_COLUMN_X + step, COORDINATE_SCORE_Y - heightColumn,
         WIDTH_COLUMN, heightColumn);
@@ -124,12 +124,12 @@ function shadowReset(ctx) {
 /**
  * Create message on background.
  * @param {CanvasRenderingContext2D} ctx - Rendering context.
- * @param {Array.<string>} names - Name users.
- * @param {Array.<number>} times - User time.
+ * @param {Array.<string>} names - Users Name.
+ * @param {Array.<number>} times - Users Time.
  */
 window.renderStatistics = function (ctx, names, times) {
-  paintCloud(ctx, 100, 10, 420, 270);
+  drwCloud(ctx, 100, 10, 420, 270);
   shadowReset(ctx);
-  paintMessage(ctx, 'Ура вы победили!', 'Список результатов!', 20);
-  paintBarChart(ctx, times, names);
+  drwMessage(ctx, 'Ура вы победили!', 'Список результатов!', 20);
+  drwBarChart(ctx, times, names);
 };
