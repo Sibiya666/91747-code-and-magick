@@ -80,7 +80,6 @@ var paintGist = function (ctx, times, names) {
     }
     ctx.fillRect(120 + step, 250 - heightColumn, 40, heightColumn);
     ctx.fillStyle = '#000';
-    ctx.font = '16px PT Mono';
     ctx.fillText(name, 120 + step, 270);
   }
 };
