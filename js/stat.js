@@ -1,5 +1,16 @@
 'use strict';
 
+/**
+ * Создает фон гикстограмма.
+ *
+ * @constructor
+ * @param {object} ctx - Контекст отрисовки.
+ * @param {number} x - Коардинаты x.
+ * @param {number} y - Коардинаты x.
+ * @param {number} width - Ширна фона.
+ * @param {number} height - Высота фона.
+ * @param {number} offset - Сдвиг подложки.
+ */
 var paintCloud = function (ctx, x, y, width, height, offset) {
   ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
   ctx.fillRect(x + offset, y + offset, width, height);
@@ -7,6 +18,15 @@ var paintCloud = function (ctx, x, y, width, height, offset) {
   ctx.fillRect(x, y, width, height);
 };
 
+/**
+ * Создает заголовки на фоне.
+ *
+ * @constructor
+ * @param {object} ctx - Контекст отрисовки.
+ * @param {string} string - Сообщение, которое нужно напечатать.
+ * @param {string} nextString - Сообщение, которое нужно напечатать на второй строчке.
+ * @param {number} step - Расстояние между строками.
+ */
 var paintMsg = function (ctx, string, nextString, step) {
   ctx.fillStyle = '#000';
   ctx.font = '16px PT Mono';
@@ -15,6 +35,13 @@ var paintMsg = function (ctx, string, nextString, step) {
 };
 
 var bestTime = -1;
+/**
+ * Определяет лучше время прохождения.
+ *
+ * @constructor
+ * @param {array} times - Массива  времени участников.
+ * @return {number} bestTime - Возвращает числож
+ */
 var getBestTime = function (times) {
   for (var a = 0; a < times.length; a++) {
     var itemTime = parseInt(times[a], 10);
@@ -25,6 +52,14 @@ var getBestTime = function (times) {
   return bestTime;
 };
 
+/**
+ * Определяет лучше время прохождения.
+ *
+ * @constructor
+ * @param {object} ctx - Контекст отрисовки.
+ * @param {array} times - Массива  времени участников.
+ * @param {array} names - Массива  имен участников.
+ */
 var paintGist = function (ctx, times, names) {
   var step = 0;
   for (var i = 0; i < times.length; i++) {
@@ -37,7 +72,7 @@ var paintGist = function (ctx, times, names) {
     ctx.font = '16px PT Mono';
     ctx.fillText(time, 120 + step, 240 - heightColumn);
     var name = names[i];
-    var saturate = Math.random();
+    var saturate = 0.1 + Math.random();
     if (name === 'Вы') {
       ctx.fillStyle = 'rgba(255, 0, 0, 1)';
     } else {
