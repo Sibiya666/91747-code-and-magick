@@ -36,21 +36,21 @@ function drawMessage(ctx, string, nextString, step) {
 /**
  * Return best time users.
  * @param {Array.<number>} times - Users Times.
- * @return {number} Return number.
+ * @return {number} - Return number.
  */
 function getBestTime(times) {
   /**
    * Return correct sequence of number.
    * @param {number} item - Element array.
    * @param {number} itemNext - Element array.
-   * @return {number} Return number.
+   * @return {number} - Return number.
    */
-  function getCorrectSequenceNumber(item, itemNext) {
+  function compareNumbers(item, itemNext) {
     return item - itemNext;
   }
 
   var timesNew = times.slice(0);
-  timesNew.sort(getCorrectSequenceNumber);
+  timesNew.sort(compareNumbers);
   return timesNew[timesNew.length - 1];
 }
 
@@ -58,7 +58,7 @@ function getBestTime(times) {
  * Return saturation color.
  * @param {number} min - min saturation color.
  * @param {number} max - max saturation color.
- * @return {number} Return number.
+ * @return {number} - Return number.
  */
 function getSaturate(min, max) {
   return Math.random() * (max - min) + min;
@@ -68,9 +68,9 @@ function getSaturate(min, max) {
  * Change color column.
  * @param {CanvasRenderingContext2D} ctx - Rendering context.
  * @param {string} name - Users Name.
- * @param {number} saturateColor - Saturate color;
+ * @param {number} saturateColor - Saturate color.
  */
-function colorColumn(ctx, name, saturateColor) {
+function getColorColumn(ctx, name, saturateColor) {
   ctx.fillStyle = (name === 'Вы') ? 'rgba(255, 0, 0, 1)' : 'rgba(3, 4 , 255, '
     + saturateColor + ')';
 }
@@ -101,7 +101,7 @@ function drawBarChart(ctx, times, names) {
     var WIDTH_COLUMN = 40;
     var name = names[i];
 
-    colorColumn(ctx, name, getSaturate(0.1, 1));
+    getColorColumn(ctx, name, getSaturate(0.1, 1));
 
     ctx.fillRect(COORDINATE_COLUMN_X + step, COORDINATE_SCORE_Y - heightColumn,
         WIDTH_COLUMN, heightColumn);
@@ -116,7 +116,7 @@ function drawBarChart(ctx, times, names) {
  * Reset shadow Canvas.
  * @param {CanvasRenderingContext2D} ctx - Rendering context.
  */
-function shadowReset(ctx) {
+function resetShadow(ctx) {
   ctx.shadowOffsetX = 0;
   ctx.shadowOffsetY = 0;
 }
@@ -129,7 +129,7 @@ function shadowReset(ctx) {
  */
 window.renderStatistics = function (ctx, names, times) {
   drawCloud(ctx, 100, 10, 420, 270);
-  shadowReset(ctx);
+  resetShadow(ctx);
   drawMessage(ctx, 'Ура вы победили!', 'Список результатов!', 20);
   drawBarChart(ctx, times, names);
 };
