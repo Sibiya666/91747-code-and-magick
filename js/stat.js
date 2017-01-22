@@ -8,7 +8,7 @@
  * @param {number} width - Width background.
  * @param {number} height - Height background.
  */
-function drwCloud(ctx, x, y, width, height) {
+function drawCloud(ctx, x, y, width, height) {
   ctx.shadowColor = 'rgba(0, 0, 0, 0.7)';
   ctx.shadowBlur = 0;
   ctx.shadowOffsetX = 10;
@@ -24,7 +24,7 @@ function drwCloud(ctx, x, y, width, height) {
  * @param {string} nextString - Next message.
  * @param {number} step - Line height.
  */
-function drwMessage(ctx, string, nextString, step) {
+function drawMessage(ctx, string, nextString, step) {
   ctx.fillStyle = '#000000';
   ctx.font = '16px PT Mono';
   var COORDINATE_STRING_X = 120;
@@ -35,15 +35,15 @@ function drwMessage(ctx, string, nextString, step) {
 
 /**
  * Return best time users.
- * @param {Array.<number>} times - Time of users.
- * @return {number} bestTime - Return number.
+ * @param {Array.<number>} times - Users Times.
+ * @return {number} Return number.
  */
-var getBestTime = function (times) {
+function getBestTime(times) {
   /**
    * Return correct sequence of number.
    * @param {number} item - Element array.
    * @param {number} itemNext - Element array.
-   * @return {number}
+   * @return {number} Return number.
    */
   function getCorrectSequenceNumber(item, itemNext) {
     return item - itemNext;
@@ -52,17 +52,17 @@ var getBestTime = function (times) {
   var timesNew = times.slice(0);
   timesNew.sort(getCorrectSequenceNumber);
   return timesNew[timesNew.length - 1];
-};
+}
 
 /**
  * Return saturation color.
  * @param {number} min - min saturation color.
  * @param {number} max - max saturation color.
- * @return {number} saturate  - Saturation color.
+ * @return {number} Return number.
  */
-var getSaturate = function (min, max) {
+function getSaturate(min, max) {
   return Math.random() * (max - min) + min;
-};
+}
 
 /**
  * Change color column.
@@ -76,12 +76,12 @@ function colorColumn(ctx, name, saturateColor) {
 }
 
 /**
- * drw bar chart.
+ * draw bar chart.
  * @param {CanvasRenderingContext2D} ctx - Rendering context.
- * @param {Array.<number>} times - Users Time.
- * @param {Array.<string>} names - Users Name.
+ * @param {Array.<number>} times - Users Times.
+ * @param {Array.<string>} names - Users Names.
  */
-function drwBarChart(ctx, times, names) {
+function drawBarChart(ctx, times, names) {
   var step = 0;
   var OFFSET = 90;
 
@@ -124,12 +124,12 @@ function shadowReset(ctx) {
 /**
  * Create message on background.
  * @param {CanvasRenderingContext2D} ctx - Rendering context.
- * @param {Array.<string>} names - Users Name.
- * @param {Array.<number>} times - Users Time.
+ * @param {Array.<string>} names - Users Names.
+ * @param {Array.<number>} times - Users Times.
  */
 window.renderStatistics = function (ctx, names, times) {
-  drwCloud(ctx, 100, 10, 420, 270);
+  drawCloud(ctx, 100, 10, 420, 270);
   shadowReset(ctx);
-  drwMessage(ctx, 'Ура вы победили!', 'Список результатов!', 20);
-  drwBarChart(ctx, times, names);
+  drawMessage(ctx, 'Ура вы победили!', 'Список результатов!', 20);
+  drawBarChart(ctx, times, names);
 };
