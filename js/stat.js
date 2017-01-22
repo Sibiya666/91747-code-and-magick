@@ -1,24 +1,32 @@
 'use strict';
 
-window.renderStatistics = function (ctx, names, times) {
+var paintCloud = function (ctx, x, y, width, height, offset) {
   ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
-  ctx.fillRect(110, 20, 420, 270);
+  ctx.fillRect(x + offset, y + offset, width, height);
   ctx.fillStyle = '#ffffff';
-  ctx.fillRect(100, 10, 420, 270);
+  ctx.fillRect(x, y, width, height);
+};
+
+var paintMsg = function (ctx, string, nextString, step) {
   ctx.fillStyle = '#000';
   ctx.font = '16px PT Mono';
-  ctx.fillText('Ура вы победили!', 120, 50);
-  ctx.fillStyle = '#000';
-  ctx.font = '16px PT Mono';
-  ctx.fillText('Список результатов!', 120, 70);
-  var step = 0;
-  var bestTime = -1;
+  ctx.fillText(string, 120, 50);
+  ctx.fillText(nextString, 120, 50 + step);
+};
+
+var bestTime = -1;
+var getBestTime = function (times) {
   for (var a = 0; a < times.length; a++) {
     var itemTime = parseInt(times[a], 10);
     if (itemTime > bestTime) {
       bestTime = itemTime;
     }
   }
+  return bestTime;
+};
+
+var paintGist = function (ctx, times, names) {
+  var step = 0;
   for (var i = 0; i < times.length; i++) {
     if (i !== 0) {
       step += 90;
@@ -40,4 +48,11 @@ window.renderStatistics = function (ctx, names, times) {
     ctx.font = '16px PT Mono';
     ctx.fillText(name, 120 + step, 270);
   }
+};
+
+window.renderStatistics = function (ctx, names, times) {
+  paintCloud(ctx, 100, 10, 420, 270, 10);
+  paintMsg(ctx, 'Ура вы победили!', 'Список результатов!', 20);
+  getBestTime(times);
+  paintGist(ctx, times, names);
 };
