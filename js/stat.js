@@ -1,66 +1,60 @@
 'use strict';
 
 /**
- * Создает фон гикстограмма.
+ * Create background.
  *
- * @constructor
- * @param {object} ctx - Контекст отрисовки.
- * @param {number} x - Коардинаты x.
- * @param {number} y - Коардинаты x.
- * @param {number} width - Ширна фона.
- * @param {number} height - Высота фона.
- * @param {number} offset - Сдвиг подложки.
+ * @function
+ * @param {CanvasRenderingContext2D} ctx - Rendering context.
+ * @param {number} x - Coordinate x.
+ * @param {number} y - Coordinate y.
+ * @param {number} width - Width background.
+ * @param {number} height - Height background.
+ * @param {number} offset - Offset background.
  */
-var paintCloud = function (ctx, x, y, width, height, offset) {
+function paintCloud(ctx, x, y, width, height, offset) {
   ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
   ctx.fillRect(x + offset, y + offset, width, height);
   ctx.fillStyle = '#ffffff';
   ctx.fillRect(x, y, width, height);
-};
+}
 
 /**
- * Создает заголовки на фоне.
+ * Create message on background.
  *
- * @constructor
- * @param {object} ctx - Контекст отрисовки.
- * @param {string} string - Сообщение, которое нужно напечатать.
- * @param {string} nextString - Сообщение, которое нужно напечатать на второй строчке.
- * @param {number} step - Расстояние между строками.
+ * @function
+ * @param {CanvasRenderingContext2D} ctx - Rendering context.
+ * @param {string} string - Message.
+ * @param {string} nextString - Next message.
+ * @param {number} step - Line height.
  */
-var paintMsg = function (ctx, string, nextString, step) {
+function paintMessage(ctx, string, nextString, step) {
   ctx.fillStyle = '#000';
   ctx.font = '16px PT Mono';
   ctx.fillText(string, 120, 50);
   ctx.fillText(nextString, 120, 50 + step);
-};
+}
 
-var bestTime = -1;
 /**
- * Определяет лучше время прохождения.
+ * Return best time users.
  *
- * @constructor
- * @param {array} times - Массива  времени участников.
- * @return {number} bestTime - Возвращает числож
+ * @function
+ * @param {Array.<number>} times - Time of users.
+ * @return {number} bestTime - Return number
  */
-var getBestTime = function (times) {
-  for (var a = 0; a < times.length; a++) {
-    var itemTime = parseInt(times[a], 10);
-    if (itemTime > bestTime) {
-      bestTime = itemTime;
-    }
-  }
-  return bestTime;
+var bestTime = function (times) {
+  times.sort();
+  return times[times.length - 1];
 };
 
 /**
- * Определяет лучше время прохождения.
+ * Paint bar chart.
  *
- * @constructor
- * @param {object} ctx - Контекст отрисовки.
- * @param {array} times - Массива  времени участников.
- * @param {array} names - Массива  имен участников.
+ * @function
+ * @param {CanvasRenderingContext2D} ctx - Rendering context.
+ * @param {Array.<number>} times - Times of users.
+ * @param {Array.<number>} names - Names of users.
  */
-var paintGist = function (ctx, times, names) {
+function paintBarChart(ctx, times, names) {
   var step = 0;
   for (var i = 0; i < times.length; i++) {
     if (i !== 0) {
@@ -68,11 +62,11 @@ var paintGist = function (ctx, times, names) {
     }
     var time = parseInt(times[i], 10);
     var MAX_HEIGHT = 150;
-    var heightColumn = MAX_HEIGHT / bestTime * time;
+    var heightColumn = MAX_HEIGHT / bestTime(times) * time;
     ctx.font = '16px PT Mono';
     ctx.fillText(time, 120 + step, 240 - heightColumn);
     var name = names[i];
-    var saturate = 0.1 + Math.random();
+    var saturate = Math.random() + 0.1;
     if (name === 'Вы') {
       ctx.fillStyle = 'rgba(255, 0, 0, 1)';
     } else {
@@ -82,11 +76,10 @@ var paintGist = function (ctx, times, names) {
     ctx.fillStyle = '#000';
     ctx.fillText(name, 120 + step, 270);
   }
-};
+}
 
 window.renderStatistics = function (ctx, names, times) {
   paintCloud(ctx, 100, 10, 420, 270, 10);
-  paintMsg(ctx, 'Ура вы победили!', 'Список результатов!', 20);
-  getBestTime(times);
-  paintGist(ctx, times, names);
+  paintMessage(ctx, 'Ура вы победили!', 'Список результатов!', 20);
+  paintBarChart(ctx, times, names);
 };
