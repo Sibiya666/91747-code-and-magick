@@ -43,25 +43,25 @@ var bestTime = function (times) {
    * Return correct sequence of number.
    * @param {number} item - Element array.
    * @param {number} itemNext - Element array.
-   * @return {number} item - Return number.
+   * @return {number}
    */
-  var correctSequenceNumber = function (item, itemNext) {
+  function getCorrectSequenceNumber(item, itemNext) {
     return item - itemNext;
-  };
+  }
 
-  var timesSort = times.slice(0);
-  timesSort.sort(correctSequenceNumber);
-  return timesSort[timesSort.length - 1];
+  var timesNew = times.slice(0);
+  timesNew.sort(getCorrectSequenceNumber);
+  return timesNew[timesNew.length - 1];
 };
 
-/** Return saturation color.
+/**
+ * Return saturation color.
  * @param {number} min - min saturation color.
  * @param {number} max - max saturation color.
- * @return {number} saturate  - Saturation color.*/
+ * @return {number} saturate  - Saturation color.
+ */
 var saturate = function (min, max) {
-  var minValue = min;
-  var maxValue = max;
-  return Math.random() * (maxValue - minValue) + minValue;
+  return Math.random() * (max - min) + min;
 };
 
 /**
@@ -71,12 +71,10 @@ var saturate = function (min, max) {
  * @param {function} saturateColor - Saturate color;
  */
 function colorColumn(ctx, name, saturateColor) {
-  if (name === 'Вы') {
-    ctx.fillStyle = 'rgba(255, 0, 0, 1)';
-  } else {
-    ctx.fillStyle = 'rgba(3, 4 , 255, ' + saturateColor + ')';
-  }
+  ctx.fillStyle = (name === 'Вы') ? 'rgba(255, 0, 0, 1)' : 'rgba(3, 4 , 255, '
+    + saturateColor + ')';
 }
+
 /**
  * Paint bar chart.
  * @param {CanvasRenderingContext2D} ctx - Rendering context.
@@ -86,10 +84,13 @@ function colorColumn(ctx, name, saturateColor) {
 function paintBarChart(ctx, times, names) {
   var step = 0;
   var OFFSET = 90;
+
   for (var i = 0; i < times.length; i++) {
+
     if (i !== 0) {
       step += OFFSET;
     }
+
     var time = parseInt(times[i], 10);
     var MAX_HEIGHT = 150;
     var heightColumn = MAX_HEIGHT / bestTime(times) * time;
@@ -99,10 +100,14 @@ function paintBarChart(ctx, times, names) {
     var COORDINATE_NAME_Y = 270;
     var WIDTH_COLUMN = 40;
     var name = names[i];
+
     colorColumn(ctx, name, saturate(0.1, 1));
-    ctx.fillRect(COORDINATE_COLUMN_X + step, COORDINATE_SCORE_Y - heightColumn, WIDTH_COLUMN, heightColumn);
+
+    ctx.fillRect(COORDINATE_COLUMN_X + step, COORDINATE_SCORE_Y - heightColumn,
+        WIDTH_COLUMN, heightColumn);
     ctx.fillStyle = '#000000';
-    ctx.fillText(time, COORDINATE_COLUMN_X + step, COORDINATE_COLUMN_Y - heightColumn);
+    ctx.fillText(time, COORDINATE_COLUMN_X + step,
+        COORDINATE_COLUMN_Y - heightColumn);
     ctx.fillText(name, COORDINATE_COLUMN_X + step, COORDINATE_NAME_Y);
   }
 }
@@ -116,6 +121,12 @@ function shadowReset(ctx) {
   ctx.shadowOffsetY = 0;
 }
 
+/**
+ * Create message on background.
+ * @param {CanvasRenderingContext2D} ctx - Rendering context.
+ * @param {Array.<string>} names - Name users.
+ * @param {Array.<number>} times - User time.
+ */
 window.renderStatistics = function (ctx, names, times) {
   paintCloud(ctx, 100, 10, 420, 270);
   shadowReset(ctx);
