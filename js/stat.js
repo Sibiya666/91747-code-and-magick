@@ -14,9 +14,9 @@ window.renderStatistics = function (ctx, names, times) {
   var step = 0;
   var bestTime = -1;
   for (var a = 0; a < times.length; a++) {
-    var time = parseInt(times[a], 10);
-    if (time > bestTime) {
-      bestTime = time;
+    var itemTime = parseInt(times[a], 10);
+    if (itemTime > bestTime) {
+      bestTime = itemTime;
     }
   }
   for (var i = 0; i < times.length; i++) {
@@ -29,7 +29,7 @@ window.renderStatistics = function (ctx, names, times) {
     ctx.font = '16px PT Mono';
     ctx.fillText(time, 120 + step, 240 - heightColumn);
     var name = names[i];
-    var saturate = 0.7 * Math.random();
+    var saturate = Math.random();
     if (name === 'Вы') {
       ctx.fillStyle = 'rgba(255, 0, 0, 1)';
     } else {
