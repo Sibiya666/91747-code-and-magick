@@ -94,25 +94,28 @@ function getRandomIndex(min, max, offset) {
  */
 function getMessage(names, times) {
 
+  var message;
+
   for (var a = 0; a < times.length; a++) {
 
-    var time = times[a];
+    var time = parseInt(times[a], 10);
     var name = names[a];
     var winMessage = ['Ура вы победили!', 'Отец!', 'Вжух и победил'];
     var looserMessage = ['Слабак!', 'Мамке привет!', 'Руки не из того места!',
       'Краб!', 'Ты подвел нас всех!'];
 
-
     if (name === 'Вы' && time === getBestTime(times)) {
 
-      return winMessage[getRandomIndex(0, 3, 1)];
+      message = winMessage[getRandomIndex(0, 3, 1)];
 
     } else {
 
-      return looserMessage[getRandomIndex(0, 5, 1)];
+      message = looserMessage[getRandomIndex(0, 5, 1)];
 
     }
+    message = message;
   }
+  return message;
 }
 /**
  * draw bar chart.
