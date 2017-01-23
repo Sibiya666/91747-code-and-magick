@@ -51,7 +51,7 @@ function getBestTime(times) {
 
   var timesNew = times.slice(0);
   timesNew.sort(compareNumbers);
-  return timesNew[timesNew.length - 1];
+  return parseInt(timesNew[timesNew.length - 1], 10);
 }
 
 /**
@@ -76,17 +76,6 @@ function getColorColumn(ctx, name, saturateColor) {
 }
 
 /**
- * Return random message in array/
- * @param {number} min - min number.
- * @param {number} max - max number.
- * @param {number} offset - offset.
- * @return {number} Return index.
- */
-function getRandomIndex(min, max, offset) {
-  return parseInt(getRandomNumberInRange(min, max), 10) - offset;
-}
-
-/**
  * Get message.
  * @param {Array.<number>} names - Users Names.
  * @param {Array.<number>} times - Users Times.
@@ -100,21 +89,20 @@ function getMessage(names, times) {
 
     var time = parseInt(times[a], 10);
     var name = names[a];
-    var winMessage = ['Ура вы победили!', 'Отец!', 'Вжух и победил'];
-    var looserMessage = ['Слабак!', 'Мамке привет!', 'Руки не из того места!',
-      'Краб!', 'Ты подвел нас всех!'];
 
-    if (name === 'Вы' && time === getBestTime(times)) {
+    if (time === getBestTime(times) && name !== 'Вы') {
 
-      message = winMessage[getRandomIndex(0, 3, 1)];
+      message = 'Победил игрок под именем ' + name + '!';
+
+      break;
 
     } else {
 
-      message = looserMessage[getRandomIndex(0, 5, 1)];
+      message = 'Вы победили!';
 
     }
-    message = message;
   }
+
   return message;
 }
 /**
