@@ -55,12 +55,12 @@ function getBestTime(times) {
 }
 
 /**
- * Return saturation color.
- * @param {number} min - min saturation color.
- * @param {number} max - max saturation color.
+ * Return random number in range.
+ * @param {number} min - min number.
+ * @param {number} max - max number.
  * @return {number} - Return number.
  */
-function getSaturate(min, max) {
+function getRandomNumberInRange(min, max) {
   return Math.random() * (max - min) + min;
 }
 
@@ -75,6 +75,45 @@ function getColorColumn(ctx, name, saturateColor) {
     + saturateColor + ')';
 }
 
+/**
+ * Return random message in array/
+ * @param {number} min - min number.
+ * @param {number} max - max number.
+ * @param {number} offset - offset.
+ * @return {number} Return index.
+ */
+function getRandomIndex(min, max, offset) {
+  return parseInt(getRandomNumberInRange(min, max), 10) - offset;
+}
+
+/**
+ * Get message.
+ * @param {Array.<number>} names - Users Names.
+ * @param {Array.<number>} times - Users Times.
+ * @return {string} Return message.
+ */
+function getMessage(names, times) {
+
+  for (var a = 0; a < times.length; a++) {
+
+    var time = times[a];
+    var name = names[a];
+    var winMessage = ['Ура вы победили!', 'Отец!', 'Вжух и победил'];
+    var looserMessage = ['Слабак!', 'Мамке привет!', 'Руки не из того места!',
+      'Краб!', 'Ты подвел нас всех!'];
+
+
+    if (name === 'Вы' && time === getBestTime(times)) {
+
+      return winMessage[getRandomIndex(0, 3, 1)];
+
+    } else {
+
+      return looserMessage[getRandomIndex(0, 5, 1)];
+
+    }
+  }
+}
 /**
  * draw bar chart.
  * @param {CanvasRenderingContext2D} ctx - Rendering context.
@@ -101,7 +140,7 @@ function drawBarChart(ctx, times, names) {
     var WIDTH_COLUMN = 40;
     var name = names[i];
 
-    getColorColumn(ctx, name, getSaturate(0.1, 1));
+    getColorColumn(ctx, name, getRandomNumberInRange(0.1, 1));
 
     ctx.fillRect(COORDINATE_COLUMN_X + step, COORDINATE_SCORE_Y - heightColumn,
         WIDTH_COLUMN, heightColumn);
@@ -130,6 +169,6 @@ function resetShadow(ctx) {
 window.renderStatistics = function (ctx, names, times) {
   drawCloud(ctx, 100, 10, 420, 270);
   resetShadow(ctx);
-  drawMessage(ctx, 'Ура вы победили!', 'Список результатов!', 20);
+  drawMessage(ctx, getMessage(names, times), 'Список результатов!', 20);
   drawBarChart(ctx, times, names);
 };
