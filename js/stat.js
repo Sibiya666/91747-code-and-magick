@@ -83,12 +83,7 @@ function getColorColumn(ctx, name, saturateColor) {
  */
 function getMessage(names, times) {
   var name = names[times.indexOf(getBestTime(times))];
-
-  if (name === 'Вы') {
-    return 'Вы победили';
-  } else {
-    return 'Победил игрок ' + name + '!';
-  }
+  return (name === 'Вы') ? 'Вы победили!' : 'Победил игрок ' + name + '!';
 }
 
 /**
