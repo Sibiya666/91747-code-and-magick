@@ -79,11 +79,12 @@ function getColorColumn(ctx, name, saturateColor) {
  * Get message.
  * @param {Array.<number>} names - Users Names.
  * @param {Array.<number>} times - Users Times.
- * @return {string} Return message.
+ * @return {string} - Return message.
  */
 function getMessage(names, times) {
-  var name = names[times.indexOf(getBestTime(times))];
-  return (name === 'Вы') ? 'Вы победили!' : 'Победил игрок ' + name + '!';
+  var winnerTimeIndex = times.indexOf(getBestTime(times));
+  var winnerName = names[winnerTimeIndex];
+  return (winnerName === 'Вы') ? 'Вы победили!' : 'Победил игрок ' + winnerName + '!';
 }
 
 /**
