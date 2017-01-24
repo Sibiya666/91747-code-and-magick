@@ -51,7 +51,7 @@ function getBestTime(times) {
 
   var timesNew = times.slice(0);
   timesNew.sort(compareNumbers);
-  return parseInt(timesNew[timesNew.length - 1], 10);
+  return timesNew[timesNew.length - 1];
 }
 
 /**
@@ -82,29 +82,15 @@ function getColorColumn(ctx, name, saturateColor) {
  * @return {string} Return message.
  */
 function getMessage(names, times) {
+  var name = names[times.indexOf(getBestTime(times))];
 
-  var message;
-
-  for (var a = 0; a < times.length; a++) {
-
-    var time = parseInt(times[a], 10);
-    var name = names[a];
-
-    if (time === getBestTime(times) && name !== 'Вы') {
-
-      message = 'Победил игрок под именем ' + name + '!';
-
-      break;
-
-    } else {
-
-      message = 'Вы победили!';
-
-    }
+  if (name === 'Вы') {
+    return 'Вы победили';
+  } else {
+    return 'Победил игрок ' + name + '!';
   }
-
-  return message;
 }
+
 /**
  * draw bar chart.
  * @param {CanvasRenderingContext2D} ctx - Rendering context.
