@@ -7,21 +7,44 @@ var fieldUserName = windowSetup.querySelector('.setup-user-name');
 var wizardCoat = windowSetup.querySelector('#wizard-coat');
 var wizardEyes = windowSetup.querySelector('#wizard-eyes');
 var wizardFireBall = windowSetup.querySelector('.setup-fireball');
-var WIZARD_COAT_COLOR_LIST = ['rgb(101, 137, 164)', 'rgb(241, 43, 107)',
-  'rgb(146, 100, 161)', 'rgb(56, 159, 117)', 'rgb(215, 210, 55)',
-  'rgb(0, 0, 0)'];
-var WIZARD_EYES_COLOR_LIST = ['black', 'red', 'blue', 'yellow', 'green'];
-var WIZARD_FIRE_BALL_COLOR_LIST = ['#ee4830', '#30a8ee', '#5ce6c0', '#e848d5', '#e6e848'];
 
 /**
- * Return random index in range.
- * @param {number} min - min number.
- * @param {number} max - max number.
- * @return {number} - Return number.
+ * @readonly
+ * @enum {string}
  */
-function getRandomIndexInRange(min, max) {
-  return parseInt(Math.random() * (max - min) + min, 10);
-}
+var WIZARD_COAT_COLOR_LIST = {
+  COLOR1: 'rgb(101, 137, 164)',
+  COLOR2: 'rgb(241, 43, 107)',
+  COLOR3: 'rgb(146, 100, 161)',
+  COLOR4: 'rgb(56, 159, 117)',
+  COLOR5: 'rgb(215, 210, 55)',
+  COLOR6: 'rgb(0, 0, 0)'
+};
+
+/**
+ * @readonly
+ * @enum {string}
+ */
+var WIZARD_EYES_COLOR_LIST = {
+  BlACK: 'black',
+  RED: 'red',
+  BLUE: 'blue',
+  YELLOW: 'yellow',
+  GREEN: 'green'
+};
+
+/**
+ * @readonly
+ * @enum {string}
+ */
+var WIZARD_FIRE_BALL_COLOR_LIST = {
+  COLOR1: '#ee4830',
+  COLOR2: '#30a8ee',
+  COLOR3: '#5ce6c0',
+  COLOR4: '#e848d5',
+  COLOR5: '#e6e848'
+};
+
 
 function openModalWindow() {
   windowSetup.classList.remove('invisible');
@@ -31,27 +54,38 @@ function closerModalWindow() {
   windowSetup.classList.add('invisible');
 }
 
+/**
+ * @param {Object} listValue - list;
+ * @return {string} Return value sting;
+ */
+function randomValueInObject(listValue) {
+  var randomKeyInRange =
+    parseInt(Math.random() * (Object.keys(listValue).length) + 0, 10);
+  var listKey = Object.keys(listValue);
+  return listValue[listKey[randomKeyInRange]];
+}
+
 function changedColorCoatWizard() {
-  wizardCoat.style.fill = WIZARD_COAT_COLOR_LIST[getRandomIndexInRange(0, 5)];
+  wizardCoat.style.fill = randomValueInObject(WIZARD_COAT_COLOR_LIST);
 }
 
 function changedColorEyesWizard() {
-  wizardEyes.style.fill = WIZARD_EYES_COLOR_LIST[getRandomIndexInRange(0, 5)];
+  wizardEyes.style.fill = randomValueInObject(WIZARD_EYES_COLOR_LIST);
 }
 
 function changedColorFireBallWizard() {
-  wizardFireBall.style.backgroundColor = WIZARD_FIRE_BALL_COLOR_LIST[getRandomIndexInRange(0, 5)];
+  wizardFireBall.style.backgroundColor = randomValueInObject(WIZARD_FIRE_BALL_COLOR_LIST);
 }
 
 /*
  * @param{number} length - Length field user name
  */
-function installLengthUserName(length) {
+function installOptionValidityUserName(length) {
   fieldUserName.maxLength = length;
   fieldUserName.required = true;
 }
 
-installLengthUserName(50);
+installOptionValidityUserName(50);
 
 /** Add listener*/
 btnSetupOpen.addEventListener('click', openModalWindow);
@@ -59,5 +93,3 @@ btnSetupClose.addEventListener('click', closerModalWindow);
 wizardCoat.addEventListener('click', changedColorCoatWizard);
 wizardEyes.addEventListener('click', changedColorEyesWizard);
 wizardFireBall.addEventListener('click', changedColorFireBallWizard);
-
-
