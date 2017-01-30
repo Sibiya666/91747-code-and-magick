@@ -12,39 +12,16 @@ var wizardFireBall = windowSetup.querySelector('.setup-fireball');
  * @readonly
  * @enum {string}
  */
-var WIZARD_COAT_COLOR_LIST = {
-  COLOR1: 'rgb(101, 137, 164)',
-  COLOR2: 'rgb(241, 43, 107)',
-  COLOR3: 'rgb(146, 100, 161)',
-  COLOR4: 'rgb(56, 159, 117)',
-  COLOR5: 'rgb(215, 210, 55)',
-  COLOR6: 'rgb(0, 0, 0)'
-};
-
-/**
- * @readonly
- * @enum {string}
- */
-var WIZARD_EYES_COLOR_LIST = {
+var colorsList = {
   BlACK: 'black',
   RED: 'red',
   BLUE: 'blue',
   YELLOW: 'yellow',
-  GREEN: 'green'
+  GREEN: 'green',
+  REBECCAPURPLE: 'rebeccapurple',
+  VIOLET: 'violet',
+  AQUA: 'aqua'
 };
-
-/**
- * @readonly
- * @enum {string}
- */
-var WIZARD_FIRE_BALL_COLOR_LIST = {
-  COLOR1: '#ee4830',
-  COLOR2: '#30a8ee',
-  COLOR3: '#5ce6c0',
-  COLOR4: '#e848d5',
-  COLOR5: '#e6e848'
-};
-
 
 function openModalWindow() {
   windowSetup.classList.remove('invisible');
@@ -55,41 +32,53 @@ function closerModalWindow() {
 }
 
 /**
- * @param {Object} listValue - list;
+ * @param {colorsList} listValue - list Colors;
  * @return {string} Return value sting;
  */
-function randomValueInObject(listValue) {
+function getRandomValueInObject(listValue) {
   var randomKeyInRange =
     parseInt(Math.random() * (Object.keys(listValue).length) + 0, 10);
   var listKey = Object.keys(listValue);
   return listValue[listKey[randomKeyInRange]];
 }
 
-function changedColorCoatWizard() {
-  wizardCoat.style.fill = randomValueInObject(WIZARD_COAT_COLOR_LIST);
+function alteringColorCoatWizard() {
+  wizardCoat.style.fill = getRandomValueInObject(colorsList);
 }
 
-function changedColorEyesWizard() {
-  wizardEyes.style.fill = randomValueInObject(WIZARD_EYES_COLOR_LIST);
+function alteringColorEyesWizard() {
+  wizardEyes.style.fill = getRandomValueInObject(colorsList);
 }
 
-function changedColorFireBallWizard() {
-  wizardFireBall.style.backgroundColor = randomValueInObject(WIZARD_FIRE_BALL_COLOR_LIST);
+function alteringColorFireBallWizard() {
+  wizardFireBall.style.backgroundColor = getRandomValueInObject(colorsList);
 }
 
 /*
  * @param{number} length - Length field user name
  */
-function installOptionValidityUserName(length) {
+function setOptionValidityUserName(length) {
+  fieldUserName.minLength = 2;
   fieldUserName.maxLength = length;
   fieldUserName.required = true;
 }
 
-installOptionValidityUserName(50);
+function checkValidityLengthUserName() {
+  if (fieldUserName.value <= '2') {
+    fieldUserName.setCustomValidity('Данное поле обязательно к заполнению.' +
+      ' Минимальное  кол-во знакова : 2 - что бы помешалось "0о"');
+  }
+}
+
+/**
+ * Set option validity user name;
+ * */
+setOptionValidityUserName(50);
 
 /** Add listener*/
 btnSetupOpen.addEventListener('click', openModalWindow);
 btnSetupClose.addEventListener('click', closerModalWindow);
-wizardCoat.addEventListener('click', changedColorCoatWizard);
-wizardEyes.addEventListener('click', changedColorEyesWizard);
-wizardFireBall.addEventListener('click', changedColorFireBallWizard);
+wizardCoat.addEventListener('click', alteringColorCoatWizard);
+wizardEyes.addEventListener('click', alteringColorEyesWizard);
+wizardFireBall.addEventListener('click', alteringColorFireBallWizard);
+fieldUserName.addEventListener('input', checkValidityLengthUserName);
