@@ -72,7 +72,7 @@ function checkValidityLengthUserName() {
 
 /**
  * Set option validity user name;
- * */
+ */
 setOptionValidityUserName(50);
 
 /** Add listener*/
