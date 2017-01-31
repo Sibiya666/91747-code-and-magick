@@ -7,7 +7,7 @@ var fieldUserName = windowSetup.querySelector('.setup-user-name');
 var wizardCoat = windowSetup.querySelector('#wizard-coat');
 var wizardEyes = windowSetup.querySelector('#wizard-eyes');
 var wizardFireBall = windowSetup.querySelector('.setup-fireball');
-
+var LENGTH_FIELD_USER_NAME = 50;
 /**
  * @readonly
  * @enum {string}
@@ -35,27 +35,27 @@ function closerModalWindow() {
  * @param {colorsList} listValue - list Colors;
  * @return {string} Return value sting;
  */
-function getRandomValueInObject(listValue) {
+function getRandomValueFromObject(listValue) {
   var randomKeyInRange =
     parseInt(Math.random() * (Object.keys(listValue).length) + 0, 10);
   var listKey = Object.keys(listValue);
   return listValue[listKey[randomKeyInRange]];
 }
 
-function alteringColorCoatWizard() {
-  wizardCoat.style.fill = getRandomValueInObject(colorsList);
+function changeColorCoatWizard() {
+  wizardCoat.style.fill = getRandomValueFromObject(colorsList);
 }
 
-function alteringColorEyesWizard() {
-  wizardEyes.style.fill = getRandomValueInObject(colorsList);
+function changeColorEyesWizard() {
+  wizardEyes.style.fill = getRandomValueFromObject(colorsList);
 }
 
-function alteringColorFireBallWizard() {
-  wizardFireBall.style.backgroundColor = getRandomValueInObject(colorsList);
+function changeColorFireBallWizard() {
+  wizardFireBall.style.backgroundColor = getRandomValueFromObject(colorsList);
 }
 
 /*
- * @param{number} length - Length field user name
+ * @param {number} length - Length field user name
  */
 function setOptionValidityUserName(length) {
   fieldUserName.minLength = 2;
@@ -66,19 +66,19 @@ function setOptionValidityUserName(length) {
 function checkValidityLengthUserName() {
   if (fieldUserName.value <= '2') {
     fieldUserName.setCustomValidity('Данное поле обязательно к заполнению.' +
-      ' Минимальное  кол-во знакова : 2 - что бы помешалось "0о"');
+      ' Минимальное  кол-во знакова : 6');
   }
 }
 
 /**
  * Set option validity user name;
  */
-setOptionValidityUserName(50);
+setOptionValidityUserName(LENGTH_FIELD_USER_NAME);
 
 /** Add listener*/
 btnSetupOpen.addEventListener('click', openModalWindow);
 btnSetupClose.addEventListener('click', closerModalWindow);
-wizardCoat.addEventListener('click', alteringColorCoatWizard);
-wizardEyes.addEventListener('click', alteringColorEyesWizard);
-wizardFireBall.addEventListener('click', alteringColorFireBallWizard);
+wizardCoat.addEventListener('click', changeColorCoatWizard);
+wizardEyes.addEventListener('click', changeColorEyesWizard);
+wizardFireBall.addEventListener('click', changeColorFireBallWizard);
 fieldUserName.addEventListener('input', checkValidityLengthUserName);
