@@ -57,7 +57,7 @@ function changeColorFireBallWizard() {
 /*
  * @param {number} length - Length field user name
  */
-function setOptionValidityUserName(length) {
+function setValidityOptionUserName(length) {
   fieldUserName.minLength = 2;
   fieldUserName.maxLength = length;
   fieldUserName.required = true;
@@ -70,10 +70,8 @@ function checkValidityLengthUserName() {
   }
 }
 
-/**
- * Set option validity user name;
- */
-setOptionValidityUserName(LENGTH_FIELD_USER_NAME);
+/** Set option validity user name */
+setValidityOptionUserName(LENGTH_FIELD_USER_NAME);
 
 /** Add listener*/
 btnSetupOpen.addEventListener('click', openModalWindow);
